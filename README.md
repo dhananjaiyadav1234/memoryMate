@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MemoryMate 🧠💖
 
-## Getting Started
+MemoryMate is a real-time, browser-based face recognition assistant designed specifically for dementia patients. Built with a focus on warmth, accessibility, and comfort, MemoryMate helps users identify their loved ones, caregivers, and friends using just their device's webcam.
 
-First, run the development server:
+## Features ✨
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Browser-Based Face Recognition**: Uses `face-api.js` (built on TensorFlow.js) to perform all face detection and recognition directly on the device, ensuring privacy and speed without requiring backend machine learning servers.
+- **Warm & Accessible UI**: Designed specifically for dementia care. Features a soothing purple/pink color palette, large rounded readable fonts (Nunito and Quicksand), and gentle, reassuring language. 
+- **Persistent Memory**: Connects to Supabase to save known faces (128-element face descriptors) and relationships securely in the cloud.
+- **Real-time AR Feedback**: Softly highlights faces with glowing, friendly bounding boxes and displays the person's name alongside their relationship (e.g., "Sarah", "Your daughter").
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack 🛠
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: Next.js 16 (App Router, Turbopack)
+- **Styling**: Vanilla CSS (Custom modern properties)
+- **Face Recognition**: `face-api.js` (SSD MobileNetV1)
+- **Database**: Supabase (PostgreSQL)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Getting Started 🚀
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js (v18+)
+- A Supabase account
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/dhananjaiyadav1234/memoryMate.git
+   cd memoryMate
+   ```
 
-## Deploy on Vercel
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up Supabase**
+   - Create a new project in Supabase.
+   - Execute the schema SQL found in `supabase/schema.sql` (if available) or create a `persons` table with columns: `id` (uuid), `name` (text), `relationship` (text), `face_descriptor` (float8[]), `photo_url` (text), `created_at` (timestamp).
+   - Create a `.env.local` file in the root directory:
+     ```env
+     NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+     NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+     ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Download the Models**
+   - `face-api.js` requires specific neural network weights. These should be placed in `public/models/`. (The required models are `ssd_mobilenetv1`, `face_landmark_68_model`, and `face_recognition_model`).
+
+5. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Design Philosophy 🎨
+
+The UI was completely overhauled from a standard "tech-focused" AR overlay to a **warm dementia-care theme**:
+- **Typography**: Removed harsh monospace fonts in favor of highly readable sans-serifs.
+- **Colors**: Replaced intense neon greens/reds with soothing lilacs and pinks to reduce anxiety.
+- **Microcopy**: Swapped technical terms like "Unidentified Target" to friendly prompts like "Who is this? Let's remember them."
+
+## License
+
+MIT License
